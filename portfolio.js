@@ -1,5 +1,7 @@
 "use strict";
 
+document.documentElement.dataset.js = "ready";
+
 const works = [
   { key: "01-soopgyeol", tag: "편백 향기 오브제 · 답례품", name: "숲결", tab: "숲결", alt: "편백나무 칩을 담은 분홍빛 향기 주머니와 숲결 패키지", size: "사과형 몸통 지름 약 7~9 cm (시안 기준)", description: "편백나무 칩을 담아 옷장이나 서랍에 은은한 나무 향을 더해요." },
   { key: "06-zodiac-coaster", tag: "월넛 · 황동 상감 맞춤 각인", name: "별자리 팬던트 컵받침대", tab: "별자리 컵받침대", alt: "월넛 위에 사수자리의 선을 새기고 황동 별점 13개를 더한 컵받침 시안", size: "지름 88 mm · 두께 약 8 mm", description: "나무에 별자리를 새기고 별이 놓인 자리에 황동을 더했어요." },
@@ -106,13 +108,58 @@ function scheduleIdleResume() {
   }, IDLE_RESUME_MS);
 }
 
+function waitForImage(img, timeoutMs = 4000) {
+  if (img.complete && img.naturalWidth > 0) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (ok) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      img.removeEventListener("load", onLoad);
+      img.removeEventListener("error", onError);
+      resolve(Boolean(ok || (img.complete && img.naturalWidth > 0)));
+    };
+    const onLoad = () => finish(true);
+    const onError = () => finish(false);
+    const timer = setTimeout(() => finish(img.complete && img.naturalWidth > 0), timeoutMs);
+    img.addEventListener("load", onLoad, { once: true });
+    img.addEventListener("error", onError, { once: true });
+    if (typeof img.decode === "function") {
+      img.decode().then(() => {
+        if (img.naturalWidth > 0) finish(true);
+      }, () => {
+        // Ignore early decode() rejections on WebKit data: URIs; load/error/timeout will settle it.
+      });
+    }
+  });
+}
+
 function scheduleAdvance() {
   clearTimeout(advanceTimer);
-  const ready = playing && !document.hidden && photo.complete && photo.naturalWidth &&
+  const ready = playing && !document.hidden &&
     displayed === selected && !showcase.hasAttribute("data-transitioning") &&
     !showcase.hasAttribute("data-fading");
-  setHoldProgress(Boolean(ready));
-  if (!ready) return;
+  if (!ready) {
+    setHoldProgress(false);
+    return;
+  }
+  if (!photo.complete || !photo.naturalWidth) {
+    setHoldProgress(false);
+    const ticket = imageReady;
+    waitForImage(photo, 2500).then(() => {
+      if (ticket !== imageReady) return;
+      const stillReady = playing && !document.hidden &&
+        displayed === selected && !showcase.hasAttribute("data-transitioning") &&
+        !showcase.hasAttribute("data-fading");
+      if (!stillReady) return;
+      setHoldProgress(true);
+      clearTimeout(advanceTimer);
+      advanceTimer = setTimeout(() => show(selected + 1, { auto: true }), Number(holdDuration.value) * 1000);
+    });
+    return;
+  }
+  setHoldProgress(true);
   advanceTimer = setTimeout(() => show(selected + 1, { auto: true }), Number(holdDuration.value) * 1000);
 }
 
@@ -203,11 +250,12 @@ function renderWork(index) {
     photo.width = samples.width;
     photo.height = samples.height;
   }
-  photo.src = imagePath(work);
+  const nextSrc = imagePath(work);
+  if (photo.getAttribute("src") !== nextSrc) photo.src = nextSrc;
   syncActiveButton(index);
   renderDetails(index);
   const ticket = ++imageReady;
-  photo.decode().catch(() => {}).then(() => {
+  waitForImage(photo, 3000).then(() => {
     if (ticket === imageReady) scheduleAdvance();
   });
 }
@@ -517,6 +565,7 @@ function paintDust(grains, t) {
 
 function textGeometry(element, start, pace, random, departing = false) {
   const node = element.firstChild, range = document.createRange();
+  if (!node || node.nodeType !== 3) return { end: start, points: [], paint() {} };
   const block = element.getBoundingClientRect(), box = localBox(element);
   const style = getComputedStyle(element), fontSize = parseFloat(style.fontSize);
   const lineHeight = parseFloat(style.lineHeight);
@@ -555,7 +604,7 @@ function textGeometry(element, start, pace, random, departing = false) {
     letters.push({ x: rect.left - block.left, y, row, width: rect.width, start: cursor });
     cursor += pace * (/[,.。]/.test(ch) ? 1.8 : 1);
   }
-  const end = (letters.at(-1)?.start ?? start) + duration;
+  const end = (letters.length ? letters[letters.length - 1].start : start) + duration;
   return {
     end, points, paint(t) {
       if (!departing && t >= end) { element.style.removeProperty("clip-path"); return; }
@@ -673,18 +722,25 @@ async function show(index, { auto = false } = {}) {
   }
 
   const destination = photoSources[index];
+  const currentSource = photoSources[displayed];
   if (!destination.complete || !destination.naturalWidth) {
     destination.loading = "eager";
-    try {
-      await destination.decode();
-    } catch {
-      if (ticket === revision) renderWork(index);
+    const ok = await waitForImage(destination, 4000);
+    if (ticket !== revision) return;
+    if (!ok) {
+      smoothFadeTo(index, ticket);
       return;
     }
   }
-  if (ticket !== revision) return;
-  if (!photoSources[displayed].naturalWidth) {
-    renderWork(index);
+  if (!currentSource.complete || !currentSource.naturalWidth) {
+    await waitForImage(currentSource, 1500);
+    if (ticket !== revision) return;
+  }
+  const originImage = (currentSource.complete && currentSource.naturalWidth)
+    ? currentSource
+    : (photo.complete && photo.naturalWidth ? photo : null);
+  if (!originImage || !destination.naturalWidth) {
+    smoothFadeTo(index, ticket);
     return;
   }
   const before = displayed;
@@ -692,7 +748,7 @@ async function show(index, { auto = false } = {}) {
   if (!a || !b) { renderWork(index); return; }
   const seed = 139 + before * 653 + index * 499 + revision;
   const rand = seeded(seed), wind = 1450;
-  const oldPhoto = surface(photoSources[before], fittedPhoto(a), 871 + before);
+  const oldPhoto = surface(originImage, fittedPhoto(a), 871 + before);
   const oldTitle = textGeometry(title, 0, Math.min(82, 1080 / title.textContent.length), rand, true);
   const oldCopy = textGeometry(description, 0, Math.min(43, 1180 / description.textContent.length), rand, true);
   const regroup = Math.max(wind, oldTitle.end, oldCopy.end) + 590;
@@ -779,10 +835,18 @@ motion.addEventListener("change", () => {
   particleRunsSinceRest = 0;
   syncMotion();
 });
-reducedMotion.addEventListener("change", () => {
+const onReducedMotionChange = () => {
   if (reducedMotion.matches) playing = false;
   syncMotion();
   syncPlayback();
+};
+if (reducedMotion.addEventListener) reducedMotion.addEventListener("change", onReducedMotionChange);
+else if (reducedMotion.addListener) reducedMotion.addListener(onReducedMotionChange);
+window.addEventListener("pageshow", () => {
+  if (!document.hidden) {
+    if (playing) requestWakeLock();
+    scheduleAdvance();
+  }
 });
 window.addEventListener("resize", () => {
   if (selected !== displayed || showcase.hasAttribute("data-transitioning")) settleSelection();
