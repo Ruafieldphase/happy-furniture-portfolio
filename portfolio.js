@@ -19,6 +19,7 @@ const thumbnailCrops = {
 const showcase = id("showcase");
 const title = id("title");
 const photo = id("photo");
+const photoFinish = id("photo-finish");
 const description = id("description");
 const announcement = id("announcement");
 const motion = id("motion");
@@ -122,6 +123,7 @@ function renderWork(index) {
     photo.width = samples.width;
     photo.height = samples.height;
   }
+  delete photoFinish.dataset.work;
   photo.src = imagePath(work);
   for (const [number, button] of buttons.entries()) {
     if (number === index) button.setAttribute("aria-current", "true");
@@ -130,7 +132,12 @@ function renderWork(index) {
   renderDetails(index);
   const ticket = ++imageReady;
   photo.decode().catch(() => {}).then(() => {
-    if (ticket === imageReady) scheduleAdvance();
+    if (ticket !== imageReady) return;
+    if (photo.naturalWidth) {
+      photoFinish.style.setProperty("--photo-ratio", photo.naturalWidth / photo.naturalHeight);
+      photoFinish.dataset.work = work.key;
+    }
+    scheduleAdvance();
   });
 }
 

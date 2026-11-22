@@ -6,10 +6,10 @@
   <meta name="description" content="행복나무공방의 향기 주머니부터 별자리 컵받침까지, 여섯 가지 작품을 만나보세요.">
   <title>행복나무공방 · 작품 포트폴리오</title>
   <link rel="icon" href="assets/happy_furniture_ci_symbol_vector.svg?v=transparent" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=product-thumbnails">
+  <link rel="stylesheet" href="styles.css?v=varnish">
   <script defer src="assets/particle-samples.js"></script>
   <script defer src="assets/particle-lightness.js"></script>
-  <script defer src="portfolio.js?v=product-thumbnails"></script>
+  <script defer src="portfolio.js?v=varnish"></script>
 </head>
 <body>
   <header class="masthead page-width">
@@ -34,6 +34,7 @@
       </div>
       <figure class="visual" id="visual">
         <img id="photo" src="assets/01-soopgyeol.webp" alt="편백나무 칩을 담은 분홍빛 향기 주머니와 숲결 패키지" width="898" height="898" fetchpriority="high">
+        <div class="photo-finish" id="photo-finish" aria-hidden="true"></div>
       </figure>
       <div class="project-info" id="details">
         <p id="description">편백나무 칩을 담아 옷장이나 서랍에 은은한 나무 향을 더해요.</p>
@@ -50,8 +51,8 @@
           <button type="button" id="autoplay">일시 정지</button>
           <select id="hold-duration" aria-label="상품 정지 시간">
             <option value="3">3초 정지</option>
-            <option value="6" selected>6초 정지</option>
-            <option value="10">10초 정지</option>
+            <option value="6">6초 정지</option>
+            <option value="10" selected>10초 정지</option>
             <option value="15">15초 정지</option>
             <option value="20">20초 정지</option>
             <option value="30">30초 정지</option>
