@@ -125,22 +125,29 @@ h1 {
   line-height: 1.68;
   word-break: keep-all;
 }
-.product-size {
-  display: flex;
-  gap: .65rem;
-  align-items: baseline;
+.product-specs {
+  display: grid;
+  gap: .36rem;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(.95rem, 1.18vw, 1.04rem);
-  line-height: 1.55;
+  font-size: clamp(.94rem, 1.15vw, 1.02rem);
+  line-height: 1.5;
   transition: opacity .35s ease;
 }
-.product-size dt { flex: none; font-weight: 700; }
-.product-size dd { margin: 0; word-break: keep-all; font-variant-numeric: tabular-nums; }
+.spec-row {
+  display: grid;
+  grid-template-columns: 3.15rem minmax(0, 1fr);
+  column-gap: .6rem;
+  align-items: baseline;
+}
+.product-specs dt { font-weight: 700; color: var(--muted); white-space: nowrap; }
+.product-specs dd { margin: 0; word-break: keep-all; font-variant-numeric: tabular-nums; }
+.price-range { font-weight: 750; color: var(--forest); }
+.price-note { color: var(--muted); font-size: .9em; }
 
-/* Keep tag & size cleanly hidden during particle choreography so wood dust leads the eye */
+/* Keep tag & specs cleanly hidden during particle choreography so wood dust leads the eye */
 .showcase[data-transitioning] .project-tag,
-.showcase[data-transitioning] .product-size { opacity: 0; visibility: hidden; }
+.showcase[data-transitioning] .product-specs { opacity: 0; visibility: hidden; }
 .showcase[data-transitioning] #photo { opacity: 0; transition: none; }
 
 /* Calm crossfade transition ONLY during thermal cooling rest or when motion is off (0 ms handoff blink after particles!) */
@@ -314,8 +321,8 @@ body:not(.is-holding) .collection li button[aria-current="true"]::after {
   .visual { height: auto; min-height: 0; }
   h1 { font-size: clamp(2.1rem, min(4.1vw, 6.4dvh), 3.9rem); }
   .project-tag { margin-bottom: .4rem; font-size: clamp(.82rem, 1.1vw, .96rem); }
-  .project-info p { margin: .7rem 0 .85rem; min-height: 0; font-size: clamp(1rem, min(1.5vw, 2.35dvh), 1.22rem); line-height: 1.6; }
-  .product-size { font-size: clamp(.9rem, 1.15vw, 1rem); }
+  .project-info p { margin: .6rem 0 .72rem; min-height: 0; font-size: clamp(1rem, min(1.5vw, 2.3dvh), 1.2rem); line-height: 1.58; }
+  .product-specs { font-size: clamp(.88rem, 1.12vw, .98rem); gap: .28rem; }
   .collection { margin-top: .75rem; padding: .68rem 0; }
   .collection-bar { margin-bottom: .5rem; }
   .project-controls :is(button, select) { min-height: 2.5rem; padding: .38rem .88rem; font-size: .88rem; }
@@ -383,7 +390,7 @@ body.presentation { position: fixed; inset: 0; z-index: 5; }
   :is(:fullscreen, .presentation) .collection ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   :is(:fullscreen, .presentation) .collection-bar { gap: .4rem; margin-bottom: .35rem; }
   :is(:fullscreen, .presentation) .project-info p { font-size: .95rem; line-height: 1.5; }
-  :is(:fullscreen, .presentation) .product-size { font-size: .85rem; }
+  :is(:fullscreen, .presentation) .product-specs { font-size: .84rem; gap: .22rem; }
   :is(:fullscreen, .presentation) .collection li button { font-size: .75rem; min-height: 2.75rem; }
   :is(:fullscreen, .presentation) .project-thumbnail { --thumbnail-size: 1.45rem; }
   :is(:fullscreen, .presentation) .project-controls { gap: .35rem; }
@@ -420,7 +427,7 @@ body.presentation { position: fixed; inset: 0; z-index: 5; }
   :is(:fullscreen, .presentation) .collection li button { font-size: .75rem; min-height: 2.75rem; }
   :is(:fullscreen, .presentation) .project-thumbnail { --thumbnail-size: 1.45rem; }
   :is(:fullscreen, .presentation) .project-info p { font-size: .93rem; line-height: 1.5; }
-  :is(:fullscreen, .presentation) .product-size { font-size: .83rem; }
+  :is(:fullscreen, .presentation) .product-specs { font-size: .82rem; gap: .2rem; }
 }
 @media (max-width: 26rem) {
   .display-controls, .motion-control { gap: .35rem; }

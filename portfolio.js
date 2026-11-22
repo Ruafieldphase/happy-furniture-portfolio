@@ -3,12 +3,12 @@
 document.documentElement.dataset.js = "ready";
 
 const works = [
-  { key: "01-soopgyeol", tag: "편백 향기 오브제 · 답례품", name: "숲결", tab: "숲결", alt: "편백나무 칩을 담은 분홍빛 향기 주머니와 숲결 패키지", size: "사과형 몸통 지름 약 7~9 cm (시안 기준)", description: "편백나무 칩을 담아 옷장이나 서랍에 은은한 나무 향을 더해요." },
-  { key: "06-zodiac-coaster", tag: "월넛 · 황동 상감 맞춤 각인", name: "별자리 팬던트 컵받침대", tab: "별자리 컵받침대", alt: "월넛 위에 사수자리의 선을 새기고 황동 별점 13개를 더한 컵받침 시안", size: "지름 88 mm · 두께 약 8 mm", description: "나무에 별자리를 새기고 별이 놓인 자리에 황동을 더했어요." },
-  { key: "02-wood-christmas-tree", tag: "수작업 원목 시즌 오브제", name: "원목 크리스마스트리", tab: "원목 트리", alt: "나무 가지와 작은 오너먼트가 달린 원목 크리스마스트리", size: "높이 1 m", description: "원목을 손으로 다듬고 한 단씩 쌓아 만든, 세상에 하나뿐인 트리예요." },
-  { key: "03-wifi-sign", tag: "기관·매장 로고 · QR 맞춤 제작", name: "와이파이 안내판", tab: "와이파이 안내판", alt: "성북구청 휘장과 예시 와이파이 QR 코드를 새긴 두 가지 월넛 안내판", size: "가로 150 × 세로 200 mm", description: "월넛에 성북구청 휘장과 와이파이 QR 코드를 새겼어요." },
-  { key: "04-dog-pendant", tag: "연락처 QR · 동물등록번호 각인", name: "반려견 펜던트", tab: "반려견 펜던트", alt: "강아지 캐릭터를 새긴 앞면과 예시 QR 코드 및 동물등록번호를 새긴 뒷면", size: "시안 지름 40 mm · 시판 예시 25 / 30 / 40 mm", description: "앞면에는 강아지 캐릭터, 뒷면에는 보호자 연락처 QR과 동물등록번호를 새겨요." },
-  { key: "05-sheep-pencil-holder", tag: "2027 양의 해 · 사은품 대량 제작 가능", name: "양 모양 나무 연필꽂이", tab: "양 연필꽂이", alt: "나무판을 끼워 조립한 양 모양 연필꽂이와 분리한 양털판 두 장", size: "설계 기준 · 길이 186.5 × 폭 149.3 × 높이 124.6 mm", description: "양털 모양의 나무판을 끼워 조립하고, 칸막이를 옮겨 문구 수납 공간을 바꿀 수 있어요." },
+  { key: "01-soopgyeol", tag: "편백 향기 오브제 · 답례품", name: "숲결", tab: "숲결", alt: "편백나무 칩을 담은 분홍빛 향기 주머니와 숲결 패키지", size: "소 · 중 · 대 (사과형 시안 약 7~9 cm)", price: "5,000원 ~ 25,000원", priceNote: "(소·중·대 단품 · 리필액 세트)", description: "편백나무 칩을 담아 옷장이나 서랍에 은은한 나무 향을 더해요." },
+  { key: "06-zodiac-coaster", tag: "월넛 · 황동 상감 맞춤 각인", name: "별자리 팬던트 컵받침대", tab: "별자리 컵받침대", alt: "월넛 위에 사수자리의 선을 새기고 황동 별점 13개를 더한 컵받침 시안", size: "지름 88 mm · 두께 약 8 mm", price: "15,000원 ~ 25,000원", priceNote: "(개당 · 황동/은동 상감)", description: "나무에 별자리를 새기고 별이 놓인 자리에 황동을 더했어요." },
+  { key: "02-wood-christmas-tree", tag: "수작업 원목 시즌 오브제", name: "원목 크리스마스트리", tab: "원목 트리", alt: "나무 가지와 작은 오너먼트가 달린 원목 크리스마스트리", size: "높이 1 m", price: "80,000원 ~ 150,000원", priceNote: "(수종 · 오너먼트 구성별)", description: "원목을 손으로 다듬고 한 단씩 쌓아 만든, 세상에 하나뿐인 트리예요." },
+  { key: "03-wifi-sign", tag: "기관·매장 로고 · QR 맞춤 제작", name: "와이파이 안내판", tab: "와이파이 안내판", alt: "성북구청 휘장과 예시 와이파이 QR 코드를 새긴 두 가지 월넛 안내판", size: "가로 150 × 세로 200 mm", price: "25,000원 ~ 40,000원", priceNote: "(맞춤 각인 · 거치/벽걸이 선택)", description: "월넛에 성북구청 휘장과 와이파이 QR 코드를 새겼어요." },
+  { key: "04-dog-pendant", tag: "연락처 QR · 동물등록번호 각인", name: "반려견 펜던트", tab: "반려견 펜던트", alt: "강아지 캐릭터를 새긴 앞면과 예시 QR 코드 및 동물등록번호를 새긴 뒷면", size: "시안 지름 40 mm · 시판 예시 25 / 30 / 40 mm", price: "10,000원 ~ 18,000원", priceNote: "(25 · 30 · 40 mm 크기별)", description: "앞면에는 강아지 캐릭터, 뒷면에는 보호자 연락처 QR과 동물등록번호를 새겨요." },
+  { key: "05-sheep-pencil-holder", tag: "2027 양의 해 · 사은품 대량 제작 가능", name: "양 모양 나무 연필꽂이", tab: "양 연필꽂이", alt: "나무판을 끼워 조립한 양 모양 연필꽂이와 분리한 양털판 두 장", size: "설계 기준 · 길이 186.5 × 폭 149.3 × 높이 124.6 mm", price: "12,000원 ~ 22,000원", priceNote: "(개별 기준 · 대량 사은품 별도 협의)", description: "양털 모양의 나무판을 끼워 조립하고, 칸막이를 옮겨 문구 수납 공간을 바꿀 수 있어요." },
 ];
 
 const id = (name) => document.getElementById(name);
@@ -230,12 +230,29 @@ const buttons = works.map((work, index) => {
   return button;
 });
 
+function setPriceDisplay(work) {
+  const priceEl = id("price");
+  if (!priceEl) return;
+  priceEl.textContent = "";
+  const range = document.createElement("span");
+  range.className = "price-range";
+  range.textContent = work.price;
+  priceEl.append(range);
+  if (work.priceNote) {
+    const note = document.createElement("span");
+    note.className = "price-note";
+    note.textContent = " " + work.priceNote;
+    priceEl.append(note);
+  }
+}
+
 function renderDetails(index) {
   const work = works[index];
   const message = work.name;
   tagEl.textContent = work.tag;
   description.textContent = work.description;
   id("size").textContent = work.size;
+  setPriceDisplay(work);
   if (announcement.textContent !== message) announcement.textContent = message;
 }
 
@@ -757,12 +774,14 @@ async function show(index, { auto = false } = {}) {
   title.textContent = works[index].name;
   description.textContent = works[index].description;
   id("size").textContent = works[index].size;
+  setPriceDisplay(works[index]);
   const heading = textGeometry(title, regroup + 440, 91, rand);
   const copy = textGeometry(description, heading.end + 230, 75, rand);
   const nextPhoto = surface(destination, fittedPhoto(b), 871 + index, false);
   title.textContent = works[before].name;
   description.textContent = works[before].description;
   id("size").textContent = works[before].size;
+  setPriceDisplay(works[before]);
 
   const assemblyStart = copy.end + 220, end = assemblyStart + assemblyTime;
   const grains = photoCloud(oldPhoto, nextPhoto, a, b, rand);
