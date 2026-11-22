@@ -57,7 +57,7 @@ let particleRunsSinceRest = 0;
 let calmRestRemaining = 0;
 let wakeLock = null;
 
-const imagePath = (work) => `assets/${work.key}.webp?v=effectcraft`;
+const imagePath = (work) => window.workshopOfflineImages?.[work.key] ?? `assets/${work.key}.webp?v=effectcraft`;
 
 try {
   const savedDuration = localStorage.getItem(holdPreference);
@@ -136,7 +136,8 @@ function syncActiveButton(activeIndex) {
   }
 }
 
-// Eagerly cache all 6 product photographs so venue Wi-Fi hiccups never stall the kiosk loop
+const photoSources = [];
+// Preload the full photos for the slideshow, independently of any embedded thumbnail.
 const buttons = works.map((work, index) => {
   const button = document.createElement("button");
   button.type = "button";
@@ -144,12 +145,15 @@ const buttons = works.map((work, index) => {
   const preview = new Image();
   preview.decoding = "async";
   preview.loading = "eager";
-  preview.src = imagePath(work);
   preview.alt = "";
   const thumbnail = document.createElement("span");
   thumbnail.className = "project-thumbnail";
   const crop = thumbnailCrops[work.key];
   const source = window.portfolioSamples?.[work.key];
+  const fullPhoto = source?.thumbnail ? new Image() : preview;
+  fullPhoto.src = imagePath(work);
+  photoSources.push(fullPhoto);
+  if (source?.thumbnail) preview.src = source.thumbnail;
   if (crop && source) {
     const frame = document.createElement("span");
     frame.className = "thumbnail-crop";
@@ -268,7 +272,6 @@ function fittedPhoto(data) {
     y: box.y + (box.height - height) / 2 };
 }
 
-const photoSources = buttons.map((button) => button.querySelector("img"));
 // Cap canvas DPR slightly lower on touch tablets (1.5x) to significantly cut heat & GPU fill-rate
 // while keeping wood-dust particles razor crisp.
 const pixelRatio = () => Math.min(window.devicePixelRatio || 1, touchDisplay.matches ? 1.5 : 1.75);

@@ -170,6 +170,11 @@ h1 {
 .collection { margin-top: 1.35rem; border-block: 1px solid var(--line); padding: 1rem 0; }
 .collection-bar { display: flex; gap: .75rem; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: .65rem; }
 .collection h2 { margin: 0; font-size: 1rem; font-weight: 750; }
+.collection-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem .75rem; }
+#offline-download, #offline-status { font-size: .78rem; }
+#offline-download { color: var(--forest); text-underline-offset: .2em; }
+#offline-status { color: var(--muted); }
+:is(:fullscreen, .presentation) :is(#offline-download, #offline-status) { display: none; }
 .collection ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .45rem; }
 .collection li button {
   position: relative;

@@ -11,10 +11,11 @@
   <meta name="theme-color" content="#f7f4ed">
   <title>행복나무공방 · 작품 포트폴리오</title>
   <link rel="icon" href="assets/happy_furniture_ci_symbol_vector.svg?v=transparent" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=booth24">
-  <script defer src="assets/particle-samples.js?v=effectcraft"></script>
+  <link rel="stylesheet" href="styles.css?v=offline1">
+  <script defer src="assets/particle-samples.js?v=offline1"></script>
   <script defer src="assets/particle-lightness.js?v=effectcraft"></script>
-  <script defer src="portfolio.js?v=booth24"></script>
+  <script defer src="portfolio.js?v=offline1"></script>
+  <script defer src="offline.js?v=offline1"></script>
 </head>
 <body>
   <header class="masthead page-width">
@@ -50,7 +51,11 @@
 
     <nav class="collection" aria-labelledby="collection-heading">
       <div class="collection-bar">
-        <h2 id="collection-heading">상품 선택</h2>
+        <div class="collection-heading">
+          <h2 id="collection-heading">상품 선택</h2>
+          <a id="offline-download" href="workshop-offline.html" download>오프라인 파일 받기</a>
+          <span id="offline-status" hidden>오프라인 재생 준비 완료</span>
+        </div>
         <div class="project-controls">
           <button type="button" id="previous">이전 작품</button>
           <button type="button" id="autoplay">일시 정지</button>
