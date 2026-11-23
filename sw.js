@@ -1,7 +1,7 @@
 "use strict";
 
 const CACHE_PREFIX = "happy-furniture-";
-const CACHE_NAME = "happy-furniture-portfolio-offline-v4";
+const CACHE_NAME = "happy-furniture-portfolio-offline-v5";
 const ROOT = self.registration.scope;
 
 const CORE_ASSETS = [

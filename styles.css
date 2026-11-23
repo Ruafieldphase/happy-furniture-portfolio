@@ -298,6 +298,28 @@ body:not(.is-holding) .collection li button[aria-current="true"]::after {
 .project-label { min-width: 0; overflow-wrap: anywhere; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
+.workshop-footer {
+  flex: none;
+  padding: .85rem 0 1.35rem;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.55;
+}
+.workshop-contact {
+  font-style: normal;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem .65rem;
+  text-align: center;
+  word-break: keep-all;
+}
+.contact-item strong { color: var(--ink); font-weight: 700; margin-right: .22rem; }
+.contact-item a { color: inherit; text-decoration: none; font-variant-numeric: tabular-nums; }
+.contact-item a:hover { color: var(--forest); text-decoration: underline; text-underline-offset: .2em; }
+.contact-sep { color: var(--line); user-select: none; }
+
 /* Single-screen fit for iPad & Lenovo Idea Tab landscape (even with browser address bar open!) */
 @media (min-width: 47.01rem) and (max-height: 58rem) {
   body {
@@ -328,6 +350,7 @@ body:not(.is-holding) .collection li button[aria-current="true"]::after {
   .project-controls :is(button, select) { min-height: 2.5rem; padding: .38rem .88rem; font-size: .88rem; }
   .collection li button { min-height: 3.15rem; padding: .24rem .38rem; font-size: .84rem; }
   .project-thumbnail { --thumbnail-size: 2.3rem; }
+  .workshop-footer { padding: .42rem 0 .25rem; font-size: .78rem; line-height: 1.35; }
 }
 
 @media (max-width: 66rem) {
@@ -354,6 +377,9 @@ body:not(.is-holding) .collection li button[aria-current="true"]::after {
   .collection ul { gap: .32rem; }
   .collection li button { gap: .32rem; min-height: 3rem; padding: .24rem; }
   .project-thumbnail { --thumbnail-size: 2rem; }
+  .workshop-footer { padding: .85rem 0 1.25rem; font-size: .8rem; }
+  .contact-sep { display: none; }
+  .workshop-contact { flex-direction: column; gap: .2rem; }
 }
 @media (max-width: 23rem) {
   .collection ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -381,6 +407,7 @@ body.presentation { position: fixed; inset: 0; z-index: 5; }
 :is(:fullscreen, .presentation) h1 { font-size: clamp(1.65rem, min(4.2vw, 6.6dvh), 4rem); }
 :is(:fullscreen, .presentation) .project-info p { margin: .65rem 0 .85rem; min-height: 0; }
 :is(:fullscreen, .presentation) .collection { margin-top: .65rem; padding-block: .6rem; }
+:is(:fullscreen, .presentation) .workshop-footer { padding: .35rem 0 .15rem; font-size: .76rem; line-height: 1.3; }
 
 @media (max-width: 47rem) and (orientation: portrait) {
   :is(:fullscreen, .presentation) .showcase {
